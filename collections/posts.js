@@ -1,0 +1,1 @@
+Posts = Meteor.Collection('posts');

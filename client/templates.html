@@ -1,0 +1,23 @@
+<template name="layout">
+	{{> yield}}
+</template>
+
+<template name="postsList">
+	{{#each posts}}
+		{{> postItem}}
+	{{/each}}
+</template>
+
+<template name="postItem">
+	<article class="post">
+		<h2 class="post-title">{{title}}</h2>
+		<p class="excerpt">{{excerpt}}</p>
+	</article>
+</template>
+
+<template name="postPage">
+	<article class="post">
+		<h2 class="post-title">{{title}}</h2>
+		<p class="excerpt">{{{content}}}</p>
+	</article>
+</template>

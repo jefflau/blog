@@ -1,23 +1,90 @@
 <template name="layout">
-	{{> yield}}
+	<div class="container">
+		{{> header}}
+		{{> yield}}
+	</div>
+</template>
+
+<template name="header">
+	<div class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/">Meteor Blog</a>
+  </div>
+  <div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      {{#if currentUser}}<li><a href="/admin">Admin</a></li>{{/if}}
+      {{#each categories}}
+      	<li><a href="/category/{{_id}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {{> loginButtons }}
+    </ul>
+  </div>
+</div>
 </template>
 
 <template name="postsList">
-	{{#each posts}}
+	{{#each this}}
 		{{> postItem}}
 	{{/each}}
 </template>
 
 <template name="postItem">
-	<article class="post">
+	<a href="{{pathFor 'postPage'}}" class="post">
 		<h2 class="post-title">{{title}}</h2>
 		<p class="excerpt">{{excerpt}}</p>
-	</article>
+	</a>
 </template>
 
 <template name="postPage">
 	<article class="post">
 		<h2 class="post-title">{{title}}</h2>
-		<p class="excerpt">{{{content}}}</p>
+		<p class="excerpt">{{{body}}}</p>
 	</article>
+</template>
+
+<template name="admin">
+	<h2>Admin Area</h2>
+	{{>postNew}}
+</template>
+
+<template name="postNew">
+	<h3>Create a new Post</h3>
+
+	<form id="postNew">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input class="form-control" name="title" type="text" value="" placeholder="Name your post"/>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="body">Body</label>
+            <textarea class="form-control" name="body" type="text" value="" row="5"></textarea>
+    </div> 
+		<div class="form-group">
+      <label for="category">Category</label>
+      <select name="category" multiple class="form-control">
+      	{{#each categories}}
+			  	<option value="{{_id}}">{{name}}</option>
+			  {{/each}}
+			</select>
+		</div> 
+		<div class="form-group form-inline">
+			<label for="add-category">Add Category</label>
+      <input name="add-category" class="form-control"  type="text" value="">
+      <button id="add-category" class="btn btn-primary">Add</button>
+		</div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </div>
+  </form>
+</template>
+
+<template name="loading">
+	Loading...
+</template>
+
+<template name="accessDenied">
+	Access Denied
 </template>
